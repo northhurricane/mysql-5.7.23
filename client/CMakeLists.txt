@@ -117,6 +117,14 @@ MYSQL_ADD_EXECUTABLE(mysql_ssl_rsa_setup mysql_ssl_rsa_setup.cc path.cc logger.c
 TARGET_LINK_LIBRARIES(mysql_ssl_rsa_setup mysys mysys_ssl)
 SET_TARGET_PROPERTIES(mysql_ssl_rsa_setup PROPERTIES LINKER_LANGUAGE CXX)
 
+INCLUDE_DIRECTORIES(SYSTEM
+  ${BOOST_PATCHES_DIR}
+  ${BOOST_INCLUDE_DIR}
+  )
+LINK_DIRECTORIES("/usr/lib64/boost/lib/")
+LINK_LIBRARIES(boost_log boost_log_setup)
+MYSQL_ADD_EXECUTABLE(htptest htptest.cc)
+
 # "WIN32" also covers 64 bit. "echo" is used in some files below "mysql-test/".
 IF(WIN32)
   MYSQL_ADD_EXECUTABLE(echo echo.c)
