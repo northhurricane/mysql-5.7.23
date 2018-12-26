@@ -122,7 +122,8 @@ INCLUDE_DIRECTORIES(SYSTEM
   ${BOOST_INCLUDE_DIR}
   )
 LINK_DIRECTORIES("/usr/lib64/boost/lib/")
-LINK_LIBRARIES(boost_log boost_log_setup)
+#LINK_LIBRARIES(boost_log boost_log_setup boost_system boost_thread)
+LINK_LIBRARIES(boost_log boost_log_setup boost_system boost_thread)
 MYSQL_ADD_EXECUTABLE(htptest htptest.cc)
 
 # "WIN32" also covers 64 bit. "echo" is used in some files below "mysql-test/".
