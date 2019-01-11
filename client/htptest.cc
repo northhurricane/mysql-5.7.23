@@ -1,4 +1,4 @@
-#define COMPILE_IT_4
+#define COMPILE_IT_7
 
 #define BOOST_LOG_DYN_LINK 1
 
@@ -171,6 +171,122 @@ void test_spsc()
 int main(int argc, char *argv[])
 {
   test_spsc();
+  return 0;
+}
+#endif
+
+#ifdef COMPILE_IT_6
+
+//need lib boost_coroutine for link
+#include <iostream>
+#include <boost/coroutine/all.hpp>
+
+using namespace std;
+typedef boost::coroutines::asymmetric_coroutine< void >::pull_type pull_coro_t;
+typedef boost::coroutines::asymmetric_coroutine< void >::push_type push_coro_t;
+
+void foo(push_coro_t & sink)
+{
+  std::cout << "1";
+  sink();
+  std::cout << "2";
+  sink();
+  std::cout << "3";
+  sink();
+  std::cout << "4";
+}
+
+int main(int argc, char * argv[])
+{
+  {
+    pull_coro_t source(foo);
+    while (source)
+    {
+      std::cout << "-";
+      source();
+    }
+  }
+
+  std::cout << "\nDone" << std::endl;
+
+  return 0;
+}
+#endif
+
+#ifdef COMPILE_IT_7
+
+#include <iostream>
+#include <boost/coroutine/all.hpp>
+
+typedef boost::coroutines::asymmetric_coroutine< int >::pull_type pull_coro_t;
+typedef boost::coroutines::asymmetric_coroutine< int >::push_type push_coro_t;
+
+
+void runit(push_coro_t & sink1)
+{
+  std::cout << "1" << std::endl;
+  sink1(10);
+  std::cout << "2" << std::endl;
+  sink1(20);
+  std::cout << "3" << std::endl;
+  sink1(30);
+  std::cout << "4" << std::endl;
+}
+
+int main(int argc, char * argv[])
+{
+  {
+    pull_coro_t source(runit);
+    while (source)
+    {
+      int ret = source.get();
+      std::cout << "ret: " << ret << std::endl;
+      source();
+    }
+  }
+
+  std::cout << "\nDone" << std::endl;
+
+  return 0;
+}
+
+#endif
+
+#ifdef COMPILE_IT_8
+#include <iostream>
+#include <boost/coroutine/all.hpp>
+
+typedef boost::coroutines::asymmetric_coroutine< int >::pull_type pull_coro_t;
+typedef boost::coroutines::asymmetric_coroutine< int >::push_type push_coro_t;
+
+
+void runit(pull_coro_t & source)
+{
+  std::cout << source.get();
+  source();
+  std::cout << source.get();
+  source();
+  std::cout << source.get();
+  source();
+  std::cout << source.get();
+}
+
+int main(int argc, char * argv[])
+{
+  {
+    push_coro_t sink(runit);
+
+    int i = 0;
+    while (sink)
+    {
+      ++i;
+      sink(i);
+      std::cout << "-";
+    }
+  }
+
+  std::cout << "\nDone" << std::endl;
+
   return 0;
 }
 #endif
