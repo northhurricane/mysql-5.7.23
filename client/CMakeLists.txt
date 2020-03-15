@@ -19,16 +19,28 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/mysys_ssl
   ${ZLIB_INCLUDE_DIR}
   ${LZ4_INCLUDE_DIR}
-  ${SSL_INCLUDE_DIRS}
+  ${SSL_INCLUDE_DIRS}	
   ${CMAKE_SOURCE_DIR}/libmysql
   ${CMAKE_SOURCE_DIR}/libbinlogevents/include
   ${CMAKE_SOURCE_DIR}/regex
   ${CMAKE_SOURCE_DIR}/strings
   ${EDITLINE_INCLUDE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_SOURCE_DIR}/sql
+  ${BOOST_PATCHES_DIR}
+  ${BOOST_INCLUDE_DIR}
+  ${CMAKE_SOURCE_DIR}
 )
 
 INCLUDE(${MYSQL_CMAKE_SCRIPT_DIR}/compile_flags.cmake)
+
+SET(BINLOG_PARSE_INCLUDE_FILES
+${CMAKE_SOURCE_DIR}/client
+${CMAKE_SOURCE_DIR}/libmysql
+${CMAKE_SOURCE_DIR}/libbinlogevents/include
+${CMAKE_SOURCE_DIR}/libmysql
+${CMAKE_SOURCE_DIR}/sql
+)
 
 ## Subdirectory with common client code.
 ADD_SUBDIRECTORY(base)
@@ -132,4 +144,10 @@ SET_TARGET_PROPERTIES (
 PROPERTIES HAS_CXX TRUE)
 
 ADD_DEFINITIONS(-DHAVE_DLOPEN)
+
+ADD_EXECUTABLE(binlog_parse 
+binlog_parse.cc
+binlog_parse_event_struct.cc
+)
+
 
