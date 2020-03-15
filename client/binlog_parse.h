@@ -130,7 +130,7 @@ struct binlog_prs_fmt_desc_event_struct
 };
 typedef struct binlog_prs_fmt_desc_event_struct binlog_prs_fmt_desc_event_t;
 
-void binlog_prs_fmt_desc_event_t_init(binlog_prs_fmt_desc_event_t *fmt_desc_event);
+void binlog_prs_fmt_desc_event_init(binlog_prs_fmt_desc_event_t *fmt_desc_event);
 
 int
 binlog_prs_parse_fmt_desc_event(const char *buf_, uint32_t event_len,
@@ -218,7 +218,7 @@ struct binlog_prs_gtid_event_struct
 };
 typedef struct binlog_prs_gtid_event_struct binlog_prs_gtid_event_t;
 
-void binlog_prs_gtid_event_t_init(binlog_prs_gtid_event_t *gitd_event);
+void binlog_prs_gtid_event_init(binlog_prs_gtid_event_t *gitd_event);
 
 
 int
@@ -353,7 +353,7 @@ struct binlog_prs_query_event_struct
 };
 typedef struct binlog_prs_query_event_struct binlog_prs_query_event_t;
 
-void binlog_prs_query_event_t_init(binlog_prs_query_event_t *query_event);
+void binlog_prs_query_event_init(binlog_prs_query_event_t *query_event);
 
 int
 binlog_prs_parse_query(const char *buf_, uint32_t event_len,
@@ -390,7 +390,7 @@ struct binlog_prs_table_map_event_struct
 };
 typedef struct binlog_prs_table_map_event_struct binlog_prs_table_map_event_t;
 
-void binlog_parse_table_map_event_t_init(binlog_prs_table_map_event_t *table_map_event);
+void binlog_parse_table_map_event_init(binlog_prs_table_map_event_t *table_map_event);
 
 int
 binlog_parse_table_map(const char *buf_, uint32_t event_len,
@@ -416,7 +416,7 @@ struct binlog_prs_row_event_struct
 
 };
 typedef struct binlog_prs_row_event_struct binlog_prs_row_event_t;
-void binlog_prs_row_event_t_init(binlog_prs_row_event_t *row_event);
+void binlog_prs_row_event_init(binlog_prs_row_event_t *row_event);
 
 // WRITE ROWS EVENT
 int
@@ -451,7 +451,7 @@ struct binlog_prs_xid_event_struct
 };
 typedef binlog_prs_xid_event_struct binlog_prs_xid_event_t;
 
-void binlog_prs_xid_event_t_init(binlog_prs_xid_event_t *xid_event);
+void binlog_prs_xid_event_init(binlog_prs_xid_event_t *xid_event);
 
 int binlog_prs_parse_xid(const char *buf_, uint32_t event_len,
                          uint16_t version, uint8_t common_header_len,
